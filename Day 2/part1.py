@@ -1,26 +1,40 @@
 import csv
 
 def main():
-    with open('D:/Advent Of Code/Day 2/reports.csv') as f:
+    with open('D:/Advent Of Code/Day 2/test.csv') as f:
         r = csv.reader(f)
         safe_count = 0
         for row in r:
-            if isAscendingOrDescending(row) == False or checkSafe(row) == False:
-                continue
-            else:
+            if isOrdered(row) == True and checkSafe(row) == True:
+                print(f"{row} is a safe report")
                 safe_count += 1
-        print(safe_count)
+            else:
+                print(f"rejecting {row}")
+        print (f"The number of safe reports are: {safe_count}")
 
 
-def isAscendingOrDescending(input):
-    if input != sorted(input) and input != sorted(input, reverse=True):
+def isOrdered(input):
+    if input == sorted(input):
+        print(f"{input} is in ascending order")
+        return True
+    elif input == sorted(input, reverse=True):
+        print(f"{input} is in descending order")
+        return True
+    else:
+        print(f"{input} is not sorted, therefore it will be rejected")
         return False
 
 
 def checkSafe(input):
     for index in range(1, len(input)):
-        if abs(int(input[index])-int(input[index-1])) == 0 or abs(int(input[index])-int(input[index-1])) > 3:
+        diff = abs(int(input[index])-int(input[index-1]))
+        if 0 < diff <= 3:
+            print(f"The difference between {input[index]} and {input[index - 1]} is {diff}")
+            continue
+        else:
+            print(f"The difference between {input[index]} and {input[index - 1]} is {diff} which is unsafe, therefore {input} will be rejected")
             return False
+    return True
 
 
 if __name__ == "__main__":
