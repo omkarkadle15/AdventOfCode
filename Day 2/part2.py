@@ -6,7 +6,9 @@ def main():
         safe_count = 0
         for row in r:
             row = list(map(int, row))
-            if isOrdered(row) == True and checkSafe(row) == True:
+            if isSafe(row) == True:
+                safe_count += 1
+            elif remIndex(row) == True:
                 safe_count += 1
             else:
                 continue
@@ -22,7 +24,7 @@ def isOrdered(input):
         return False
 
 
-def checkSafe(input):
+def checkDiff(input):
     for index in range(1, len(input)):
         diff = abs(input[index] - input[index-1])
         if 0 < diff <= 3:
@@ -30,6 +32,24 @@ def checkSafe(input):
         else:
             return False
     return True
+
+
+def remIndex(input):
+    for index in range(len(input)):
+        temp = list(input)
+        temp.pop(index)
+        if isSafe(temp) == False:
+            continue
+        else:
+            return True
+    return False
+
+
+def isSafe(input):
+    if isOrdered(input) == True and checkDiff(input) == True:
+        return True
+    else:
+        return False
 
 
 if __name__ == "__main__":

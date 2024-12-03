@@ -1,7 +1,7 @@
 import csv
 
 def main():
-    with open('D:/Advent Of Code/Day 2/reports.csv') as f:
+    with open('reports.csv') as f:
         r = csv.reader(f)
         safe_count = 0
         for row in r:
